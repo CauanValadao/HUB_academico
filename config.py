@@ -1,33 +1,18 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-from contextlib import contextmanager
+import os
 
-DATABASE_URL = "mysql+mysqlconnector://root:3stUD4NT1!@localhost/hub-academico"
-# Na URL tem a parte da senha, usuário, host e nome do banco de dados.
-# Provavelmente você vai precisar alterar somente a senha para a sua e faça o nome do schema igual a hub-academico
-# URL = "mysql+mysqlconnector://<usuário>:<senha>@<host>/<nome_do_banco_de_dados>"
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(bind=engine) 
-
-
-# Classe que todas as tabelas criadas vão herdar
-Base = declarative_base()
-
-def create_tables():
+class Config:
     """
-    Cria as tabelas no banco (se ainda não existirem).
+    Classe de configuração para a aplicação Flask.
+    As variáveis de configuração são definidas como atributos da classe.
     """
-    # Importe os modelos aqui para garantir que sejam criados no banco de dados
-    Base.metadata.create_all(bind=engine)
 
-@contextmanager
-def get_db():
-    """
-    Cria uma sessão de banco de dados para ser usada em cada requisição.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    # 1. A String de Conexão com o Banco de Dados
+    # A extensão Flask-SQLAlchemy procura por esta variável com este nome exato.
+    # Use a URL que você já tinha, apenas ajuste o nome do banco se necessário.
+    # URL = "mysql+mysqlconnector://<usuário>:<senha>@<host>/<nome_do_banco_de_dados>"
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{usuario}:{senha}@{host}/{nomeDoBancoDeDados}'
+
+
+    # 2. Configuração Opcional, mas Recomendada
+    # Desativa o sistema de eventos do Flask-SQLAlchemy, que não usaremos e consome recursos.
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
