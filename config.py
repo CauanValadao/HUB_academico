@@ -15,6 +15,8 @@ class Config:
     DB_USERNAME = os.environ.get('DB_USERNAME')
     DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+
     # 1. A String de Conexão com o Banco de Dados
     # A extensão Flask-SQLAlchemy pro cura por esta variável com este nome exato.
     # Use a URL que você já tinha, apenas ajuste o nome do banco se necessário.
